@@ -18,7 +18,6 @@ topic = sns_wrapper.create_topic(topic_name)
 
 bucket = custombucket
 region = customregion
-topic = customtopic
 
 db_conn = connections.Connection(
     host=customhost,
