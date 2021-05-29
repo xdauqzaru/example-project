@@ -13,6 +13,7 @@
     <a href="about.html">About Us</a>
 </div>
 <div class="main">
+    <p>An email will be sent to your address when you attempt to register. In order to finish the registration you need to confirm.</p>
     <form action="/register" method = "POST" enctype="multipart/form-data">
         Last Name: <br> <input type="text" name="lname" required> <br>
         First Name: <br> <input type="text" name="fname" required> <br>
@@ -24,7 +25,6 @@
         <button type="submit"> Register </button>
     </form>
 
-    <h3>{{ emailconfirm }}</h3> <br>
     <h3>{{ text }}</h3> <br>
 
 </div>

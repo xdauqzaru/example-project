@@ -69,7 +69,6 @@ def Register():
     if out == None:
     
         email_sub = sns_wrapper.subscribe(topic, 'email', email)
-        render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate your account.")
         
         while (email_sub.attributes['PendingConfirmation'] == 'true'):
             email_sub.reload()
@@ -77,8 +76,7 @@ def Register():
         try:
             cursor.execute(insert_sql, ('', first_name, last_name, address, phone, email, password))
             db_conn.commit()
-            emp_name = "" + first_name + " " + last_name
-            # Uplaod image file in S3 #
+
             image_file_name_in_s3 = "user_" + last_name + "_" + first_name + "_image_file"
             s3 = boto3.resource('s3')
 
@@ -106,7 +104,7 @@ def Register():
     else:
         return render_template('register.html', text="This email is already in our database.")
 
-    return render_template('index.html', name=emp_name)
+    return render_template('index.html')
 
 @app.route("/login", methods=['POST', 'GET'])
 def Login():
