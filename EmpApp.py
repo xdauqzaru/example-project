@@ -63,7 +63,7 @@ def Register():
     insert_sql = "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT %s FROM users", email)
+    cursor.execute("SELECT * FROM users WHERE email=%s", email)
     out = cursor.fetchone()
 
     if out == None:
@@ -72,7 +72,6 @@ def Register():
         render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate your account.")
         
         while (email_sub.attributes['PendingConfirmation'] == 'true'):
-            render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate your account.")
             email_sub.reload()
 
         try:
