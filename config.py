@@ -5,5 +5,3 @@ customdb = "users"
 custombucket = "projectcc"
 customregion = "us-east-1"
 customtopic = "arn:aws:sns:us-east-1:901876227683:projectcc"
-accesskey = "ASIA5D7ADDZRTQ5OQ6GG"
-secretkey = 'RZdCw/MT4SJRl8mUwqy0I/YuFp7PtwVlUnkcBdmP'

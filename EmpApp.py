@@ -9,10 +9,12 @@ from sns import *
 
 app = Flask(__name__)
 
-sns = boto3.client('sns',
-    aws_access_key_id = 'ASIA5D7ADDZRQCPFNWFR',
-    aws_secret_access_key = 'Io5X/XAaJpnqvwOKPTFAA+wUdeHhB3XFtj2LJAvL',
-    region_name = customregion)
+sns_wrapper = SnsWrapper(boto3.resource('sns', region_name="us-east-1"))
+
+topic_name = 'projectCC'
+
+print(f"Creating topic {topic_name}.")
+topic = sns_wrapper.create_topic(topic_name)
 
 bucket = custombucket
 region = customregion
@@ -63,8 +65,13 @@ def Register():
     if image.filename == "":
         return "Please select a file"
 
-    try:
+    email_sub = sns_wrapper.subscribe(topic, 'email', email)
 
+    while (email_sub.attributes['PendingConfirmation'] == 'true'):
+        render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate the account")
+        email_sub.reload()
+
+    try:
         cursor.execute(insert_sql, ('', first_name, last_name, address, phone, email, password))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
@@ -101,7 +108,6 @@ def Register():
 def Login():
     email = request.form['email']    
     password = request.form['password']
-    response = sns.publish(TopicArn=topic, Subject='Hello', MessageAttributes={})
     cursor = db_conn.cursor()
     # cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s;", (email,password,))
     cursor.execute("SELECT * FROM users WHERE email=%s AND password =%s", (email, password))
