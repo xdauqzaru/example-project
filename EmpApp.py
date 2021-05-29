@@ -55,52 +55,58 @@ def Register():
     phone = request.form['phone']    
     email = request.form['email']    
     password = request.form['password']
-
     image = request.files['image']
+
+    if image.filename == "":
+            return "Please select a file"
 
     insert_sql = "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
-    if image.filename == "":
-        return "Please select a file"
+    cursor.execute("SELECT " + email +" FROM users")
+    out = cursor.fetchone()
 
-    email_sub = sns_wrapper.subscribe(topic, 'email', email)
-
-    while (email_sub.attributes['PendingConfirmation'] == 'true'):
-        render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate the account")
-        email_sub.reload()
-
-    try:
-        cursor.execute(insert_sql, ('', first_name, last_name, address, phone, email, password))
-        db_conn.commit()
-        emp_name = "" + first_name + " " + last_name
-        # Uplaod image file in S3 #
-        image_file_name_in_s3 = "user_" + last_name + "_" + first_name + "_image_file"
-        s3 = boto3.resource('s3')
+    if out == None:
+    
+        email_sub = sns_wrapper.subscribe(topic, 'email', email)
+        render_template('register.html', emailconfirm="An confirmation email was sent to " + email + ". Please subscribe to activate your account.")
+        
+        while (email_sub.attributes['PendingConfirmation'] == 'true'):
+            render_template('register.html', emailconfirm="An confirmation email was sent to " + email + ". Please subscribe to activate your account.")
+            email_sub.reload()
 
         try:
-            print("Data inserted in MySQL RDS... uploading image to S3...")
-            s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=image)
-            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-            s3_location = (bucket_location['LocationConstraint'])
+            cursor.execute(insert_sql, ('', first_name, last_name, address, phone, email, password))
+            db_conn.commit()
+            emp_name = "" + first_name + " " + last_name
+            # Uplaod image file in S3 #
+            image_file_name_in_s3 = "user_" + last_name + "_" + first_name + "_image_file"
+            s3 = boto3.resource('s3')
 
-            if s3_location is None:
-                s3_location = ''
-            else:
-                s3_location = '-' + s3_location
+            try:
+                print("Data inserted in MySQL RDS... uploading image to S3...")
+                s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=image)
+                bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                s3_location = (bucket_location['LocationConstraint'])
 
-            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-                s3_location,
-                custombucket,
-                image_file_name_in_s3)
+                if s3_location is None:
+                    s3_location = ''
+                else:
+                    s3_location = '-' + s3_location
 
-        except Exception as e:
-            return str(e)
+                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                    s3_location,
+                    custombucket,
+                    image_file_name_in_s3)
 
-    finally:
-        cursor.close()
+            except Exception as e:
+                return str(e)
 
-    print("all modification done...")
+        finally:
+            cursor.close()
+    else:
+        return render_template('register.html', text="This email is already in our database.")
+
     return render_template('index.html', name=emp_name)
 
 @app.route("/login", methods=['POST', 'GET'])
