@@ -1,0 +1,81 @@
+body {
+    text-align: center;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+  
+footer {
+    background-color: #696868;
+    position: absolute;
+    margin-bottom: 0;
+    width: 100%;
+    border-style: solid;
+  }
+
+input[type=text], input[type=email], input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+input[type=file], button {
+    width: 90%;
+    background-color: rgb(29, 10, 19);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+button {
+    width: 100%;
+  }
+
+input[type=file]:hover, button:hover {
+    background-color:rgb(15, 4, 5);
+  }
+  
+.main {
+    border-radius: 5px;
+    background-color: #4b4b4b;
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 5%;
+    border-style: solid;
+  }
+
+.content {
+    display: flex;
+
+}
+
+img {
+    border-radius: 5%;
+    margin: 3%;
+}
+
+.left {
+    margin: 3%;
+}
+
+.right {
+    margin: 3%;
+}
+
+.leftindx {
+    margin: auto;
+}
+
+.rightindx {
+    margin: auto;
+}

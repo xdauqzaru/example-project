@@ -3,33 +3,46 @@
     <title>
         Project CC
     </title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
 
-<div class="menu">
-    <a href="index.html">Home</a>
-    <a href="register.html">Register</a>
-    <a href="login.html">Login</a>
-    <a href="about.html">About Us</a>
-</div>
-<div class="main">
-    <p>An email will be sent to your address when you attempt to register. In order to finish the registration you need to confirm.</p>
-    <form action="/register" method = "POST" enctype="multipart/form-data">
-        Last Name: <br> <input type="text" name="lname" required> <br>
-        First Name: <br> <input type="text" name="fname" required> <br>
-        Address: <br> <input type="text" name="address" required> <br>
-        Phone Number: <br> <input type="text" name="phone" required> <br>
-        Email: <br> <input type="email" name="email" required> <br>
-        Password: <br> <input type="password" name="password" required> <br>
-        Image: <input type=file name="image" required> <br>
-        <button type="submit"> Register </button>
-    </form>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Sign In</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <div class="left">
+            <img src="../images/ammo1.jpg" alt="Pistol" width="300" height="200">
+            <img src="../images/m4.jpg" alt="Pistol" width="300" height="200">
 
-    <h3>{{ text }}</h3> <br>
-
-</div>
-<div class="footer">
-    <p>Powered by Daniel Arteni since 2021. All rights reserved!</p>
-</div>
+        </div>
+        <div class="main">
+            <h2>Sign In</h2>
+            <p>An email will be sent to your address when you attempt to register. In order to finish the registration you need to confirm.</p>
+            <form action="/register" method = "POST" enctype="multipart/form-data">
+                Last Name: <br> <input type="text" name="lname" required> <br>
+                First Name: <br> <input type="text" name="fname" required> <br>
+                Address: <br> <input type="text" name="address" required> <br>
+                Phone Number: <br> <input type="text" name="phone" required> <br>
+                Email: <br> <input type="email" name="email" required> <br>
+                Password: <br> <input type="password" name="password" required> <br>
+                Image: <input type=file name="image" required> <br>
+                <button type="submit"> Sign In </button>
+            </form>
+            <h3>{{ text }}</h3>
+        </div>
+        <div class="right">
+            <img src="../images/auto3.jpg" alt="Pistol" width="300" height="500">
+        </div>
+    </div>
+    <footer>
+        <p>Powered by Daniel Arteni since 2021. All rights reserved!</p>
+    </footer>
 </body>
 </html>

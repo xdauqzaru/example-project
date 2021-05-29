@@ -3,20 +3,44 @@
     <title>
         About Us
     </title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/contact.css">
+    <link rel="stylesheet" href="../css/menu.css">
+
 </head>
 <body>
+    <nav>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Sign In</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <div class="left">
+            <img src="../images/ammo.jpg" alt="Pistol" width="300" height="500">
 
-<div class="menu">
-    <a href="index.html">Home</a>
-    <a href="register.html">Register</a>
-    <a href="login.html">Login</a>
-    <a href="about.html">About Us</a>
-</div>
-<div class="main">
-    <p>We are an website which sell guns.</p>
-</div>
-<div class="footer">
-    <p>Powered by Daniel Arteni since 2021. All rights reserved!</p>
-</div>
+        </div>
+        <div class="main">
+            <br>
+            <form action="/about" method="POST">
+                <h3>Contact Us</h3>
+                <input type="text" id="email" name="email" placeholder="Email adress.." required/>
+        
+                <h3>Message</h3>
+                <textarea id="subject" name="subject" placeholder="Write something.." required></textarea>
+        
+                <input type="submit" value="Submit" />
+            </form>
+            <p>Phone number: +40752963545</p>
+            <p>Address: Tudor Vladimirescu, Iasi, no. 25</p>
+        </div>
+        <div class="right">
+        </div>
+    </div>
+    <footer>
+        <p>Powered by Daniel Arteni since 2021. All rights reserved!</p>
+    </footer>
 </body>
 </html>
