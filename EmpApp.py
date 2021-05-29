@@ -63,16 +63,16 @@ def Register():
     insert_sql = "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT " + email +" FROM users")
+    cursor.execute("SELECT %s FROM users", email)
     out = cursor.fetchone()
 
     if out == None:
     
         email_sub = sns_wrapper.subscribe(topic, 'email', email)
-        render_template('register.html', emailconfirm="An confirmation email was sent to " + email + ". Please subscribe to activate your account.")
+        render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate your account.")
         
         while (email_sub.attributes['PendingConfirmation'] == 'true'):
-            render_template('register.html', emailconfirm="An confirmation email was sent to " + email + ". Please subscribe to activate your account.")
+            render_template('register.html', emailconfirm="An confirmation email was sent. Please subscribe to activate your account.")
             email_sub.reload()
 
         try:
