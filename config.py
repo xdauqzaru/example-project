@@ -1,6 +1,9 @@
-customhost = "employee.c9uj0gns7dba.us-east-1.rds.amazonaws.com"
+customhost = "projectcc-database.c9uj0gns7dba.us-east-1.rds.amazonaws.com"
 customuser = "admin"
 custompass = "qwertyuiop"
-customdb = "employee"
-custombucket = "employeeb"
+customdb = "users"
+custombucket = "projectcc"
 customregion = "us-east-1"
+customtopic = "arn:aws:sns:us-east-1:901876227683:projectcc"
+accesskey = "ASIA5D7ADDZRTQ5OQ6GG"
+secretkey = 'RZdCw/MT4SJRl8mUwqy0I/YuFp7PtwVlUnkcBdmP'

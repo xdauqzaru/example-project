@@ -1,13 +1,22 @@
-from flask import Flask, render_template, request
+from pydoc import render_doc
+from flask import Flask, render_template, request, redirect
+# from matplotlib.style import use
 from pymysql import connections
 import os
 import boto3
 from config import *
+from sns import *
 
 app = Flask(__name__)
 
+sns = boto3.client('sns',
+    aws_access_key_id = 'ASIA5D7ADDZRQCPFNWFR',
+    aws_secret_access_key = 'Io5X/XAaJpnqvwOKPTFAA+wUdeHhB3XFtj2LJAvL',
+    region_name = customregion)
+
 bucket = custombucket
 region = customregion
+topic = customtopic
 
 db_conn = connections.Connection(
     host=customhost,
@@ -15,49 +24,57 @@ db_conn = connections.Connection(
     user=customuser,
     password=custompass,
     db=customdb
-
 )
-output = {}
-table = 'student'
 
-
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/index.html", methods=['GET'])
 def home():
-    return render_template('AddEmp.html')
+    return render_template("index.html")
 
+@app.route("/", methods=['GET'])
+def home_simple():
+    return render_template("index.html")
 
-@app.route("/about", methods=['POST'])
+@app.route("/register.html", methods=['GET'])
+def register():
+    return render_template('register.html')
+
+@app.route("/login.html", methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route("/about.html", methods=['GET'])
 def about():
-    return render_template('www.intellipaat.com')
+    return render_template('about.html')
 
+@app.route("/register", methods=['POST'])
+def Register():
+    last_name = request.form['lname']
+    first_name = request.form['fname']
+    address = request.form['address']
+    phone = request.form['phone']    
+    email = request.form['email']    
+    password = request.form['password']
 
-@app.route("/addemp", methods=['POST'])
-def AddEmp():
-    emp_id = request.form['emp_id']
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    pri_skill = request.form['pri_skill']
-    location = request.form['location']
-    emp_image_file = request.files['emp_image_file']
+    image = request.files['image']
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
-    if emp_image_file.filename == "":
+    if image.filename == "":
         return "Please select a file"
 
     try:
 
-        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location))
+        cursor.execute(insert_sql, ('', first_name, last_name, address, phone, email, password))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
         # Uplaod image file in S3 #
-        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        image_file_name_in_s3 = "user_" + last_name + "_" + first_name + "_image_file"
         s3 = boto3.resource('s3')
 
         try:
             print("Data inserted in MySQL RDS... uploading image to S3...")
-            s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
+            s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=image)
             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint'])
 
@@ -69,7 +86,7 @@ def AddEmp():
             object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
                 s3_location,
                 custombucket,
-                emp_image_file_name_in_s3)
+                image_file_name_in_s3)
 
         except Exception as e:
             return str(e)
@@ -78,8 +95,22 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    return render_template('index.html', name=emp_name)
 
+@app.route("/login", methods=['POST', 'GET'])
+def Login():
+    email = request.form['email']    
+    password = request.form['password']
+    response = sns.publish(TopicArn=topic, Subject='Hello', MessageAttributes={})
+    cursor = db_conn.cursor()
+    # cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s;", (email,password,))
+    cursor.execute("SELECT * FROM users WHERE email=%s AND password =%s", (email, password))
+    out = cursor.fetchone()
+
+    if out == None:
+        return render_template('login.html', text="Email or password is wrong. Please try again!")
+    else:
+        return redirect('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
