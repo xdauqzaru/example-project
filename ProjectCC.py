@@ -87,18 +87,18 @@ def Register():
             try:
                 print("Data inserted in MySQL RDS... uploading image to S3...")
                 s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=image)
-                bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-                s3_location = (bucket_location['LocationConstraint'])
+                # bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                # s3_location = (bucket_location['LocationConstraint'])
 
-                if s3_location is None:
-                    s3_location = ''
-                else:
-                    s3_location = '-' + s3_location
+                # if s3_location is None:
+                #     s3_location = ''
+                # else:
+                #     s3_location = '-' + s3_location
 
-                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-                    s3_location,
-                    custombucket,
-                    image_file_name_in_s3)
+                # object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                #     s3_location,
+                #     custombucket,
+                #     image_file_name_in_s3)
 
             except Exception as e:
                 return str(e)
@@ -132,24 +132,13 @@ def Contact():
     file_object = open('contact.txt', 'a')
     file_object.write("Email: " + email + "\nSubject: " + subject + "\n\n")
     file_object.close()
-    # s3 = boto3.resource('s3')
-    # try:
-    #     s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=image)
-    #     bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-    #     s3_location = (bucket_location['LocationConstraint'])
 
-    #     if s3_location is None:
-    #         s3_location = ''
-    #     else:
-    #         s3_location = '-' + s3_location
+    s3 = boto3.resource('s3')
+    try:
+        s3.Bucket(custombucket).upload_file("contact.txt", "projectcc/contact.txt")
+    except Exception as e:
+        return str(e)
 
-    #     object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-    #                 s3_location,
-    #                 custombucket,
-    #                 image_file_name_in_s3)
-
-    # except Exception as e:
-    #     return str(e)
     return render_template('about.html', text="The message was sent!")
 
 if __name__ == '__main__':
