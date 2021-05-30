@@ -47,6 +47,10 @@ def login():
 def about():
     return render_template('about.html')
 
+@app.route("/store.html", methods=['GET'])
+def store():
+    return render_template('store.html')
+
 @app.route("/register", methods=['POST'])
 def Register():
     last_name = request.form['lname']
