@@ -135,7 +135,7 @@ def Contact():
 
     s3 = boto3.resource('s3')
     try:
-        s3.Bucket(custombucket).upload_file("contact.txt", "projectcc/contact.txt")
+        s3.Bucket(custombucket).upload_file("contact.txt", "contact.txt")
     except Exception as e:
         return str(e)
 
