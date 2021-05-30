@@ -18,8 +18,8 @@
     </nav>
     <div class="content">
         <div class="left">
-            <img src="../images/ammo1.jpg" alt="Pistol" width="300" height="200">
-            <img src="../images/auto2.jpg" alt="Pistol" width="300" height="200">
+            <img src="{{ url_for('static',filename='images/ammo1.jpg') }}" alt="Pistol" width="300" height="200">
+            <img src="{{ url_for('static',filename='images/auto2.jpg') }}" alt="Pistol" width="300" height="200">
 
         </div>
         <div class="main">
@@ -32,7 +32,7 @@
             <h3>{{ text }}</h3>
         </div>
         <div class="right">
-            <img src="../images/pistol3.jpg" alt="Pistol" width="300" height="500">
+            <img src="{{ url_for('static',filename='images/pistol3.jpg') }}" alt="Pistol" width="300" height="500">
         </div>
     </div>
     <footer>
