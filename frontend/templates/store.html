@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        GunShop Iasi
+    </title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}"/>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/menu.css') }}"/>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/shop.css') }}"/>
+    <!-- <link rel= "stylesheet" type= "text/css" href= "../static/css/style.css"/>
+    <link rel= "stylesheet" type= "text/css" href= "../static/css/menu.css"/>
+    <link rel= "stylesheet" type= "text/css" href= "../static/css/shop.css"/> -->
+
+</head>
+<body>
+
+    <nav>
+        <ul class="menu">
+            <li><a href="store.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="main">
+        <h1>ShopGun Store</h1> <br>
+        <div class="shop">
+            <div class="row">
+                <div class="product">
+                    <!-- <img src="../static/images/m67 grenade.jpg" alt="Pistol" width="500" height="500"> -->
+                    <img src="{{ url_for('static',filename='images/m67_grenade.jpg') }}" alt="Pistol" width="500" height="500">
+                    <h2>M67 Grenade</h2>
+                    <h3>Price: 600$</h3><br>
+                    <button type="submit">Add to chart</button>
+                </div>
+                <div class="product">
+                    <!-- <img src="../static/images/Glock.jpg" alt="Pistol" width="500" height="500"> -->
+                    <img src="{{ url_for('static',filename='images/Glock.jpg') }}" alt="Pistol" width="500" height="500">
+                    <h2>Glock 19</h2>
+                    <h3>Price: 1500$</h3><br>
+                    <button type="submit">Add to chart</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="product">
+                    <!-- <img src="../static/images/knife.jpg" alt="Pistol" width="500" height="500"> -->
+                    <img src="{{ url_for('static',filename='images/knife.jpg') }}" alt="Pistol" width="500" height="500">
+                    <h2>Hunter Knife</h2>
+                    <h3>Price: 500$</h3><br>
+                    <button type="submit">Add to chart</button>
+                </div>
+                <div class="product">
+                    <!-- <img src="../static/images/revolver.jpg" alt="Pistol" width="500" height="500"> -->
+                    <img src=".{{ url_for('static',filename='images/revolver.jpg') }}" alt="Pistol" width="500" height="500">
+                    <h2>Revolver</h2>
+                    <h3>Price: 2000$</h3><br>
+                    <button type="submit">Add to chart</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Powered by Daniel Arteni since 2021. All rights reserved!</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.shop {
+    margin: auto;
+}
+
+.main {
+    width: 60%;
+
+}
+.row {
+    display: flex;
+}
+
+.product {
+    margin: 3%;
+}
+
+button {
+    margin: auto;
+}
