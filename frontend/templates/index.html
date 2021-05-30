@@ -3,8 +3,6 @@
     <title>
         Project CC
     </title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/menu.css">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}"/>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/menu.css') }}"/>
 
@@ -22,7 +20,7 @@
 
     <div class="content">
         <div class="leftindx">
-            <img src="images/m4a1.jpg" alt="Pistol" width="300" height="200">
+            <img src="{{ url_for('static',filename='images/m4a1.jpg') }}" alt="Pistol" width="300" height="200">
             <img src="images/pistol.jpg" alt="Pistol" width="300" height="200">
             <img src="images/m4.jpg" alt="Pistol" width="300" height="200">
             <img src="images/pistol2.jpg" alt="Pistol" width="300" height="200">
