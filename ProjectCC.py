@@ -7,7 +7,7 @@ import boto3
 from config import *
 from sns import *
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='./frontend/templates',static_folder='./frontend/static')
 
 sns_wrapper = SnsWrapper(boto3.resource('sns', region_name="us-east-1"))
 
