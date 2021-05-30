@@ -125,9 +125,9 @@ def Login():
         return redirect('store.html')
 
 @app.route("/contact", methods=['POST'])
-def Contact(req, res):
-    email = req.body.email   
-    subject = req.body.subject
+def Contact():
+    email = request.form['email']  
+    subject = request.form['subject']
 
     file_object = open('contact.txt', 'a')
     file_object.write("Email: " + email + "\nSubject: " + subject + "\n\n")
@@ -150,10 +150,7 @@ def Contact(req, res):
 
     # except Exception as e:
     #     return str(e)
-
-    rez = "<div><p>Message sent!</p></div>"
-    res.send(rez)
-    res.end()
+    return render_template('about.html', text="The message was sent!")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
